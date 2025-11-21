@@ -1,0 +1,72 @@
+{
+  "courses": [
+    {
+      "courseId": "CRS001",
+      "title": "Introduction to Java Programming",
+      "description": "Learn the fundamentals of Java programming language including OOP concepts.",
+      "instructorId": "USR002",
+      "approvalStatus": "APPROVED",
+      "createdAt": "2025-01-20T09:00:00",
+      "students": ["USR003"],
+      "lessons": [
+        {
+          "lessonId": "LSN001",
+          "title": "Getting Started with Java",
+          "content": "Java is a versatile, object-oriented programming language...",
+          "resources": ["https://docs.oracle.com/java"],
+          "quiz": {
+            "quizId": "QZ001",
+            "questions": [
+              {
+                "questionId": "Q001",
+                "questionText": "What is the main method signature in Java?",
+                "options": [
+                  "public static void main(String[] args)",
+                  "public void main(String args)",
+                  "static void main()",
+                  "void main(String[] args)"
+                ],
+                "correctAnswerIndex": 0
+              },
+              {
+                "questionId": "Q002",
+                "questionText": "Which keyword is used to create a class in Java?",
+                "options": ["struct", "class", "object", "type"],
+                "correctAnswerIndex": 1
+              }
+            ],
+            "passingScore": 50
+          }
+        },
+        {
+          "lessonId": "LSN002",
+          "title": "Object-Oriented Programming",
+          "content": "OOP is a programming paradigm based on the concept of objects...",
+          "resources": [],
+          "quiz": {
+            "quizId": "QZ002",
+            "questions": [
+              {
+                "questionId": "Q003",
+                "questionText": "Which of these is NOT an OOP principle?",
+                "options": ["Encapsulation", "Inheritance", "Compilation", "Polymorphism"],
+                "correctAnswerIndex": 2
+              }
+            ],
+            "passingScore": 50
+          }
+        }
+      ]
+    },
+    {
+      "courseId": "CRS002",
+      "title": "Advanced Data Structures",
+      "description": "Deep dive into complex data structures and algorithms.",
+      "instructorId": "USR002",
+      "approvalStatus": "PENDING",
+      "createdAt": "2025-02-15T11:00:00",
+      "students": [],
+      "lessons": []
+    }
+  ]
+}

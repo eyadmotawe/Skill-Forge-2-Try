@@ -1,0 +1,54 @@
+{
+  "users": [
+    {
+      "userId": "USR001",
+      "role": "ADMIN",
+      "username": "admin",
+      "email": "admin@skillforge.edu",
+      "passwordHash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+      "createdAt": "2025-01-01T00:00:00",
+      "enrolledCourses": [],
+      "progress": {},
+      "quizAttempts": [],
+      "certificates": []
+    },
+    {
+      "userId": "USR002",
+      "role": "INSTRUCTOR",
+      "username": "john_instructor",
+      "email": "john@skillforge.edu",
+      "passwordHash": "5e884898da28047d9171547579908cb2c04e75508e5bbdf4db8577eb2c6e8e2d",
+      "createdAt": "2025-01-15T10:30:00",
+      "createdCourses": ["CRS001"],
+      "enrolledCourses": [],
+      "progress": {},
+      "quizAttempts": [],
+      "certificates": []
+    },
+    {
+      "userId": "USR003",
+      "role": "STUDENT",
+      "username": "alice_student",
+      "email": "alice@student.edu",
+      "passwordHash": "5e884898da28047d9171547579908cb2c04e75508e5bbdf4db8577eb2c6e8e2d",
+      "createdAt": "2025-02-01T14:00:00",
+      "enrolledCourses": ["CRS001"],
+      "progress": {
+        "CRS001": {
+          "completedLessons": ["LSN001"],
+          "currentLessonId": "LSN002"
+        }
+      },
+      "quizAttempts": [
+        {
+          "lessonId": "LSN001",
+          "courseId": "CRS001",
+          "score": 80,
+          "passed": true,
+          "attemptDate": "2025-02-10T16:00:00"
+        }
+      ],
+      "certificates": []
+    }
+  ]
+}
