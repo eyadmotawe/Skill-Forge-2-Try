@@ -1,6 +1,5 @@
 package ui;
 
-
 import auth.AuthService;
 import model.*;
 
@@ -22,64 +21,42 @@ public class SignupFrame extends BaseFrame {
     protected void initComponents() {
         setLayout(new BorderLayout());
 
-        // Header
-        JPanel headerPanel = new JPanel();
-        headerPanel.setBackground(PRIMARY_COLOR);
-        headerPanel.setPreferredSize(new Dimension(getWidth(), 80));
-        JLabel titleLbl = new JLabel("SkillForge - Create Account");
-        titleLbl.setFont(TITLE_FONT);
-        titleLbl.setForeground(Color.WHITE);
-        headerPanel.add(titleLbl);
-        add(headerPanel, BorderLayout.NORTH);
-
-        // Center form
         JPanel centerPanel = new JPanel(new GridBagLayout());
-        centerPanel.setBackground(BG_COLOR);
 
         JPanel formPanel = new JPanel();
         formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
-        formPanel.setBackground(Color.WHITE);
-        formPanel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
-                BorderFactory.createEmptyBorder(30, 40, 30, 40)
-        ));
 
         JLabel signupTitle = createTitleLabel("Sign Up");
-        signupTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         formPanel.add(signupTitle);
-        formPanel.add(Box.createVerticalStrut(20));
+        formPanel.add(Box.createVerticalStrut(15));
 
         usernameField = createStyledTextField();
         formPanel.add(createFormRow("Username:", usernameField));
-        formPanel.add(Box.createVerticalStrut(10));
+        formPanel.add(Box.createVerticalStrut(5));
 
         emailField = createStyledTextField();
         formPanel.add(createFormRow("Email:", emailField));
-        formPanel.add(Box.createVerticalStrut(10));
+        formPanel.add(Box.createVerticalStrut(5));
 
         passwordField = createStyledPasswordField();
         formPanel.add(createFormRow("Password:", passwordField));
-        formPanel.add(Box.createVerticalStrut(10));
+        formPanel.add(Box.createVerticalStrut(5));
 
         confirmPasswordField = createStyledPasswordField();
         formPanel.add(createFormRow("Confirm:", confirmPasswordField));
-        formPanel.add(Box.createVerticalStrut(10));
+        formPanel.add(Box.createVerticalStrut(5));
 
         roleCombo = new JComboBox<>(new String[]{"Student", "Instructor"});
-        roleCombo.setFont(REGULAR_FONT);
-        roleCombo.setPreferredSize(new Dimension(250, 35));
         formPanel.add(createFormRow("Role:", roleCombo));
-        formPanel.add(Box.createVerticalStrut(20));
+        formPanel.add(Box.createVerticalStrut(15));
 
-        // Buttons
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
-        btnPanel.setOpaque(false);
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
 
-        signupBtn = createStyledButton("Sign Up", SUCCESS_COLOR);
+        signupBtn = createStyledButton("Sign Up", null);
         signupBtn.addActionListener(e -> handleSignup());
         btnPanel.add(signupBtn);
 
-        backBtn = createStyledButton("Back to Login", SECONDARY_COLOR);
+        backBtn = createStyledButton("Cancel", null);
         backBtn.addActionListener(e -> backToLogin());
         btnPanel.add(backBtn);
 

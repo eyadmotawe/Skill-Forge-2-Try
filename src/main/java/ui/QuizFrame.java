@@ -1,6 +1,5 @@
 package ui;
 
-
 import auth.AuthService;
 import database.JsonDatabaseManager;
 import model.*;
@@ -33,21 +32,16 @@ public class QuizFrame extends BaseFrame {
     protected void initComponents() {
         setLayout(new BorderLayout());
 
-        // Header
         JPanel header = new JPanel();
-        header.setBackground(WARNING_COLOR);
-        header.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
         JLabel titleLbl = new JLabel("Quiz: " + lesson.getTitle());
-        titleLbl.setFont(SUBTITLE_FONT);
-        titleLbl.setForeground(Color.WHITE);
+        titleLbl.setFont(new Font("Dialog", Font.BOLD, 12));
+        titleLbl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         header.add(titleLbl);
         add(header, BorderLayout.NORTH);
 
-        // Questions
         questionsPanel = new JPanel();
         questionsPanel.setLayout(new BoxLayout(questionsPanel, BoxLayout.Y_AXIS));
-        questionsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        questionsPanel.setBackground(Color.WHITE);
+        questionsPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         answerGroups = new ArrayList<>();
         List<Question> questions = quiz.getQuestions();
@@ -56,22 +50,19 @@ public class QuizFrame extends BaseFrame {
             Question q = questions.get(i);
             JPanel qPanel = createQuestionPanel(i + 1, q);
             questionsPanel.add(qPanel);
-            questionsPanel.add(Box.createVerticalStrut(20));
+            questionsPanel.add(Box.createVerticalStrut(10));
         }
 
         JScrollPane scrollPane = new JScrollPane(questionsPanel);
-        scrollPane.getVerticalScrollBar().setUnitIncrement(16);
         add(scrollPane, BorderLayout.CENTER);
 
-        // Footer
-        JPanel footer = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 10));
-        footer.setBackground(BG_COLOR);
+        JPanel footer = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 5));
 
-        JButton submitBtn = createStyledButton("Submit Quiz", SUCCESS_COLOR);
+        JButton submitBtn = createStyledButton("Submit Quiz", null);
         submitBtn.addActionListener(e -> submitQuiz());
         footer.add(submitBtn);
 
-        JButton cancelBtn = createStyledButton("Cancel", SECONDARY_COLOR);
+        JButton cancelBtn = createStyledButton("Cancel", null);
         cancelBtn.addActionListener(e -> dispose());
         footer.add(cancelBtn);
 
@@ -81,17 +72,16 @@ public class QuizFrame extends BaseFrame {
     private JPanel createQuestionPanel(int num, Question question) {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setOpaque(false);
         panel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(189, 195, 199)),
-                BorderFactory.createEmptyBorder(15, 15, 15, 15)
+                BorderFactory.createLineBorder(Color.GRAY),
+                BorderFactory.createEmptyBorder(10, 10, 10, 10)
         ));
 
-        JLabel qLabel = new JLabel("<html><b>Q" + num + ":</b> " + question.getQuestionText() + "</html>");
+        JLabel qLabel = new JLabel("Q" + num + ": " + question.getQuestionText());
         qLabel.setFont(REGULAR_FONT);
         qLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(qLabel);
-        panel.add(Box.createVerticalStrut(10));
+        panel.add(Box.createVerticalStrut(5));
 
         ButtonGroup group = new ButtonGroup();
         answerGroups.add(group);
@@ -100,7 +90,6 @@ public class QuizFrame extends BaseFrame {
         for (int i = 0; i < options.size(); i++) {
             JRadioButton rb = new JRadioButton(options.get(i));
             rb.setFont(REGULAR_FONT);
-            rb.setOpaque(false);
             rb.setActionCommand(String.valueOf(i));
             rb.setAlignmentX(Component.LEFT_ALIGNMENT);
             group.add(rb);
@@ -144,12 +133,11 @@ public class QuizFrame extends BaseFrame {
     private void showResults(List<Integer> answers, int score, boolean passed) {
         questionsPanel.removeAll();
 
-        JLabel resultLbl = new JLabel(passed ? "PASSED - Score: " + score + "%" : "FAILED - Score: " + score + "%");
-        resultLbl.setFont(TITLE_FONT);
-        resultLbl.setForeground(passed ? SUCCESS_COLOR : DANGER_COLOR);
+        JLabel resultLbl = new JLabel((passed ? "PASSED" : "FAILED") + " - Score: " + score + "%");
+        resultLbl.setFont(new Font("Dialog", Font.BOLD, 14));
         resultLbl.setAlignmentX(Component.LEFT_ALIGNMENT);
         questionsPanel.add(resultLbl);
-        questionsPanel.add(Box.createVerticalStrut(20));
+        questionsPanel.add(Box.createVerticalStrut(15));
 
         List<Question> questions = quiz.getQuestions();
         for (int i = 0; i < questions.size(); i++) {
@@ -159,11 +147,13 @@ public class QuizFrame extends BaseFrame {
 
             JPanel qPanel = new JPanel();
             qPanel.setLayout(new BoxLayout(qPanel, BoxLayout.Y_AXIS));
-            qPanel.setBackground(correct ? new Color(212, 239, 223) : new Color(250, 219, 216));
-            qPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+            qPanel.setBorder(BorderFactory.createCompoundBorder(
+                    BorderFactory.createLineBorder(correct ? Color.GREEN : Color.RED),
+                    BorderFactory.createEmptyBorder(8, 8, 8, 8)
+            ));
             qPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-            JLabel qLbl = new JLabel("<html><b>Q" + (i+1) + ":</b> " + q.getQuestionText() + "</html>");
+            JLabel qLbl = new JLabel("Q" + (i+1) + ": " + q.getQuestionText());
             qLbl.setFont(REGULAR_FONT);
             qPanel.add(qLbl);
 
@@ -174,12 +164,11 @@ public class QuizFrame extends BaseFrame {
             if (!correct) {
                 JLabel correctAns = new JLabel("Correct answer: " + q.getCorrectAnswer());
                 correctAns.setFont(REGULAR_FONT);
-                correctAns.setForeground(SUCCESS_COLOR);
                 qPanel.add(correctAns);
             }
 
             questionsPanel.add(qPanel);
-            questionsPanel.add(Box.createVerticalStrut(10));
+            questionsPanel.add(Box.createVerticalStrut(8));
         }
 
         questionsPanel.revalidate();

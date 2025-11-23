@@ -1,6 +1,5 @@
 package ui;
 
-
 import auth.AuthService;
 import database.JsonDatabaseManager;
 import model.*;
@@ -40,18 +39,14 @@ public class InstructorDashboardFrame extends BaseFrame {
 
     private JPanel createHeaderPanel() {
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(SECONDARY_COLOR);
-        header.setPreferredSize(new Dimension(getWidth(), 60));
-        header.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
         User user = auth.getCurrentUser();
-        JLabel titleLbl = new JLabel("Instructor: " + user.getUsername());
-        titleLbl.setFont(SUBTITLE_FONT);
-        titleLbl.setForeground(Color.WHITE);
+        JLabel titleLbl = new JLabel("Instructor Dashboard - " + user.getUsername());
+        titleLbl.setFont(new Font("Dialog", Font.BOLD, 12));
+        titleLbl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         header.add(titleLbl, BorderLayout.WEST);
 
-        JButton logoutBtn = createStyledButton("Logout", DANGER_COLOR);
-        logoutBtn.setPreferredSize(new Dimension(100, 35));
+        JButton logoutBtn = createStyledButton("Logout", null);
         logoutBtn.addActionListener(e -> logout());
         header.add(logoutBtn, BorderLayout.EAST);
 
@@ -59,9 +54,8 @@ public class InstructorDashboardFrame extends BaseFrame {
     }
 
     private JPanel createCoursesPanel() {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setBackground(BG_COLOR);
+        JPanel panel = new JPanel(new BorderLayout(5, 5));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         coursesModel = new DefaultTableModel(
                 new String[]{"Course ID", "Title", "Status", "Students", "Lessons"}, 0) {
@@ -69,31 +63,28 @@ public class InstructorDashboardFrame extends BaseFrame {
         };
         coursesTable = new JTable(coursesModel);
         coursesTable.setFont(REGULAR_FONT);
-        coursesTable.setRowHeight(30);
-        coursesTable.getTableHeader().setFont(REGULAR_FONT);
 
         panel.add(new JScrollPane(coursesTable), BorderLayout.CENTER);
 
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        btnPanel.setOpaque(false);
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-        JButton createBtn = createStyledButton("Create Course", SUCCESS_COLOR);
+        JButton createBtn = createStyledButton("Create Course", null);
         createBtn.addActionListener(e -> createCourse());
         btnPanel.add(createBtn);
 
-        JButton editBtn = createStyledButton("Edit Course", PRIMARY_COLOR);
+        JButton editBtn = createStyledButton("Edit", null);
         editBtn.addActionListener(e -> editCourse());
         btnPanel.add(editBtn);
 
-        JButton lessonsBtn = createStyledButton("Manage Lessons", WARNING_COLOR);
+        JButton lessonsBtn = createStyledButton("Lessons", null);
         lessonsBtn.addActionListener(e -> manageLessons());
         btnPanel.add(lessonsBtn);
 
-        JButton deleteBtn = createStyledButton("Delete", DANGER_COLOR);
+        JButton deleteBtn = createStyledButton("Delete", null);
         deleteBtn.addActionListener(e -> deleteCourse());
         btnPanel.add(deleteBtn);
 
-        JButton refreshBtn = createStyledButton("Refresh", SECONDARY_COLOR);
+        JButton refreshBtn = createStyledButton("Refresh", null);
         refreshBtn.addActionListener(e -> loadData());
         btnPanel.add(refreshBtn);
 
@@ -102,9 +93,8 @@ public class InstructorDashboardFrame extends BaseFrame {
     }
 
     private JPanel createStudentsPanel() {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setBackground(BG_COLOR);
+        JPanel panel = new JPanel(new BorderLayout(5, 5));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         studentsModel = new DefaultTableModel(
                 new String[]{"Student ID", "Username", "Email", "Enrolled Courses"}, 0) {
@@ -112,8 +102,6 @@ public class InstructorDashboardFrame extends BaseFrame {
         };
         studentsTable = new JTable(studentsModel);
         studentsTable.setFont(REGULAR_FONT);
-        studentsTable.setRowHeight(30);
-        studentsTable.getTableHeader().setFont(REGULAR_FONT);
 
         panel.add(new JScrollPane(studentsTable), BorderLayout.CENTER);
         return panel;
@@ -121,10 +109,9 @@ public class InstructorDashboardFrame extends BaseFrame {
 
     private JPanel createInsightsPanel() {
         JPanel panel = new JPanel(new BorderLayout());
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setBackground(BG_COLOR);
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
-        JButton viewChartBtn = createStyledButton("View Analytics", PRIMARY_COLOR);
+        JButton viewChartBtn = createStyledButton("View Analytics", null);
         viewChartBtn.addActionListener(e -> {
             int row = coursesTable.getSelectedRow();
             if (row < 0) {
@@ -136,21 +123,7 @@ public class InstructorDashboardFrame extends BaseFrame {
         });
 
         JPanel centerPanel = new JPanel(new GridBagLayout());
-        centerPanel.setOpaque(false);
-
-        JPanel infoPanel = new JPanel();
-        infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
-        infoPanel.setOpaque(false);
-
-        JLabel infoLbl = new JLabel("Select a course and click to view analytics");
-        infoLbl.setFont(SUBTITLE_FONT);
-        infoLbl.setAlignmentX(Component.CENTER_ALIGNMENT);
-        infoPanel.add(infoLbl);
-        infoPanel.add(Box.createVerticalStrut(20));
-        viewChartBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        infoPanel.add(viewChartBtn);
-
-        centerPanel.add(infoPanel);
+        centerPanel.add(viewChartBtn);
         panel.add(centerPanel, BorderLayout.CENTER);
 
         return panel;

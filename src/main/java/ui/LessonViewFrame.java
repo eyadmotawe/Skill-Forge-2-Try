@@ -1,6 +1,5 @@
 package ui;
 
-
 import auth.AuthService;
 import database.JsonDatabaseManager;
 import model.*;
@@ -35,31 +34,25 @@ public class LessonViewFrame extends BaseFrame {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLayout(new BorderLayout());
 
-        // Header
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(PRIMARY_COLOR);
-        header.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
         JLabel titleLbl = new JLabel(course.getTitle());
-        titleLbl.setFont(SUBTITLE_FONT);
-        titleLbl.setForeground(Color.WHITE);
+        titleLbl.setFont(new Font("Dialog", Font.BOLD, 12));
+        titleLbl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         header.add(titleLbl, BorderLayout.WEST);
 
-        JButton backBtn = createStyledButton("Back", SECONDARY_COLOR);
+        JButton backBtn = createStyledButton("Close", null);
         backBtn.addActionListener(e -> dispose());
         header.add(backBtn, BorderLayout.EAST);
         add(header, BorderLayout.NORTH);
 
-        // Split pane
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
-        splitPane.setDividerLocation(250);
+        splitPane.setDividerLocation(200);
 
-        // Left - Lesson list
         JPanel leftPanel = new JPanel(new BorderLayout());
-        leftPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 5));
-        leftPanel.setBackground(BG_COLOR);
+        leftPanel.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 2));
 
-        JLabel lessonsLbl = createLabel("Lessons");
-        lessonsLbl.setFont(SUBTITLE_FONT);
+        JLabel lessonsLbl = new JLabel("Lessons");
+        lessonsLbl.setFont(new Font("Dialog", Font.BOLD, 12));
         leftPanel.add(lessonsLbl, BorderLayout.NORTH);
 
         lessonModel = new DefaultListModel<>();
@@ -73,36 +66,29 @@ public class LessonViewFrame extends BaseFrame {
         leftPanel.add(new JScrollPane(lessonList), BorderLayout.CENTER);
         splitPane.setLeftComponent(leftPanel);
 
-        // Right - Content
-        JPanel rightPanel = new JPanel(new BorderLayout(10, 10));
-        rightPanel.setBorder(BorderFactory.createEmptyBorder(10, 5, 10, 10));
-        rightPanel.setBackground(BG_COLOR);
+        JPanel rightPanel = new JPanel(new BorderLayout(5, 5));
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(5, 2, 5, 5));
 
         contentArea = new JTextArea();
         contentArea.setFont(REGULAR_FONT);
         contentArea.setEditable(false);
         contentArea.setLineWrap(true);
         contentArea.setWrapStyleWord(true);
-        contentArea.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
         rightPanel.add(new JScrollPane(contentArea), BorderLayout.CENTER);
 
-        // Bottom panel
         JPanel bottomPanel = new JPanel(new BorderLayout());
-        bottomPanel.setOpaque(false);
 
         resourcesPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        resourcesPanel.setOpaque(false);
         bottomPanel.add(resourcesPanel, BorderLayout.NORTH);
 
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        btnPanel.setOpaque(false);
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-        takeQuizBtn = createStyledButton("Take Quiz", WARNING_COLOR);
+        takeQuizBtn = createStyledButton("Take Quiz", null);
         takeQuizBtn.addActionListener(e -> takeQuiz());
         takeQuizBtn.setEnabled(false);
         btnPanel.add(takeQuizBtn);
 
-        completeBtn = createStyledButton("Mark Complete", SUCCESS_COLOR);
+        completeBtn = createStyledButton("Mark Complete", null);
         completeBtn.addActionListener(e -> markComplete());
         completeBtn.setEnabled(false);
         btnPanel.add(completeBtn);
@@ -135,7 +121,7 @@ public class LessonViewFrame extends BaseFrame {
             resourcesPanel.add(createLabel("Resources: "));
             for (String res : lesson.getResources()) {
                 JLabel link = new JLabel("<html><u>" + res + "</u></html>");
-                link.setForeground(PRIMARY_COLOR);
+                link.setForeground(new Color(70, 130, 180));
                 link.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 resourcesPanel.add(link);
             }
@@ -209,9 +195,8 @@ public class LessonViewFrame extends BaseFrame {
             if (value instanceof Lesson lesson) {
                 Student student = (Student) auth.getCurrentUser();
                 boolean completed = student.hasCompletedLesson(courseId, lesson.getLessonId());
-                String prefix = completed ? "✓ " : "○ ";
+                String prefix = completed ? "[X] " : "[ ] ";
                 setText(prefix + lesson.getTitle());
-                if (completed) setForeground(SUCCESS_COLOR);
             }
             return this;
         }

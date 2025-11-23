@@ -1,6 +1,5 @@
 package ui;
 
-
 import auth.AuthService;
 import database.JsonDatabaseManager;
 import model.*;
@@ -38,18 +37,14 @@ public class AdminDashboardFrame extends BaseFrame {
 
     private JPanel createHeaderPanel() {
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(DANGER_COLOR);
-        header.setPreferredSize(new Dimension(getWidth(), 60));
-        header.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
         User user = auth.getCurrentUser();
         JLabel titleLbl = new JLabel("Admin Panel - " + user.getUsername());
-        titleLbl.setFont(SUBTITLE_FONT);
-        titleLbl.setForeground(Color.WHITE);
+        titleLbl.setFont(new Font("Dialog", Font.BOLD, 12));
+        titleLbl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         header.add(titleLbl, BorderLayout.WEST);
 
-        JButton logoutBtn = createStyledButton("Logout", SECONDARY_COLOR);
-        logoutBtn.setPreferredSize(new Dimension(100, 35));
+        JButton logoutBtn = createStyledButton("Logout", null);
         logoutBtn.addActionListener(e -> logout());
         header.add(logoutBtn, BorderLayout.EAST);
 
@@ -57,15 +52,8 @@ public class AdminDashboardFrame extends BaseFrame {
     }
 
     private JPanel createPendingCoursesPanel() {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setBackground(BG_COLOR);
-
-        // Info label
-        JLabel infoLbl = new JLabel("Review and approve/reject courses submitted by instructors");
-        infoLbl.setFont(REGULAR_FONT);
-        infoLbl.setForeground(SECONDARY_COLOR);
-        panel.add(infoLbl, BorderLayout.NORTH);
+        JPanel panel = new JPanel(new BorderLayout(5, 5));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         pendingModel = new DefaultTableModel(
                 new String[]{"Course ID", "Title", "Description", "Instructor", "Created"}, 0) {
@@ -73,28 +61,24 @@ public class AdminDashboardFrame extends BaseFrame {
         };
         pendingTable = new JTable(pendingModel);
         pendingTable.setFont(REGULAR_FONT);
-        pendingTable.setRowHeight(35);
-        pendingTable.getTableHeader().setFont(REGULAR_FONT);
-        pendingTable.getColumnModel().getColumn(2).setPreferredWidth(250);
 
         panel.add(new JScrollPane(pendingTable), BorderLayout.CENTER);
 
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        btnPanel.setOpaque(false);
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-        JButton approveBtn = createStyledButton("Approve", SUCCESS_COLOR);
+        JButton approveBtn = createStyledButton("Approve", null);
         approveBtn.addActionListener(e -> approveCourse());
         btnPanel.add(approveBtn);
 
-        JButton rejectBtn = createStyledButton("Reject", DANGER_COLOR);
+        JButton rejectBtn = createStyledButton("Reject", null);
         rejectBtn.addActionListener(e -> rejectCourse());
         btnPanel.add(rejectBtn);
 
-        JButton viewBtn = createStyledButton("View Details", PRIMARY_COLOR);
+        JButton viewBtn = createStyledButton("View Details", null);
         viewBtn.addActionListener(e -> viewCourseDetails());
         btnPanel.add(viewBtn);
 
-        JButton refreshBtn = createStyledButton("Refresh", SECONDARY_COLOR);
+        JButton refreshBtn = createStyledButton("Refresh", null);
         refreshBtn.addActionListener(e -> loadData());
         btnPanel.add(refreshBtn);
 
@@ -103,9 +87,8 @@ public class AdminDashboardFrame extends BaseFrame {
     }
 
     private JPanel createAllCoursesPanel() {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setBackground(BG_COLOR);
+        JPanel panel = new JPanel(new BorderLayout(5, 5));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         allCoursesModel = new DefaultTableModel(
                 new String[]{"Course ID", "Title", "Status", "Instructor", "Students", "Lessons"}, 0) {
@@ -113,19 +96,16 @@ public class AdminDashboardFrame extends BaseFrame {
         };
         allCoursesTable = new JTable(allCoursesModel);
         allCoursesTable.setFont(REGULAR_FONT);
-        allCoursesTable.setRowHeight(30);
-        allCoursesTable.getTableHeader().setFont(REGULAR_FONT);
 
         panel.add(new JScrollPane(allCoursesTable), BorderLayout.CENTER);
 
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        btnPanel.setOpaque(false);
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-        JButton deleteBtn = createStyledButton("Delete Course", DANGER_COLOR);
+        JButton deleteBtn = createStyledButton("Delete Course", null);
         deleteBtn.addActionListener(e -> deleteAnyCourse());
         btnPanel.add(deleteBtn);
 
-        JButton changeStatusBtn = createStyledButton("Change Status", WARNING_COLOR);
+        JButton changeStatusBtn = createStyledButton("Change Status", null);
         changeStatusBtn.addActionListener(e -> changeStatus());
         btnPanel.add(changeStatusBtn);
 
@@ -134,9 +114,8 @@ public class AdminDashboardFrame extends BaseFrame {
     }
 
     private JPanel createUsersPanel() {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setBackground(BG_COLOR);
+        JPanel panel = new JPanel(new BorderLayout(5, 5));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         usersModel = new DefaultTableModel(
                 new String[]{"User ID", "Username", "Email", "Role", "Enrolled/Created"}, 0) {
@@ -144,8 +123,6 @@ public class AdminDashboardFrame extends BaseFrame {
         };
         usersTable = new JTable(usersModel);
         usersTable.setFont(REGULAR_FONT);
-        usersTable.setRowHeight(30);
-        usersTable.getTableHeader().setFont(REGULAR_FONT);
 
         panel.add(new JScrollPane(usersTable), BorderLayout.CENTER);
         return panel;

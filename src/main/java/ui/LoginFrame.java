@@ -1,6 +1,5 @@
 package ui;
 
-
 import auth.AuthService;
 import model.*;
 
@@ -21,50 +20,30 @@ public class LoginFrame extends BaseFrame {
     protected void initComponents() {
         setLayout(new BorderLayout());
 
-        // Header
-        JPanel headerPanel = new JPanel();
-        headerPanel.setBackground(PRIMARY_COLOR);
-        headerPanel.setPreferredSize(new Dimension(getWidth(), 80));
-        JLabel titleLbl = new JLabel("SkillForge Learning Platform");
-        titleLbl.setFont(TITLE_FONT);
-        titleLbl.setForeground(Color.WHITE);
-        headerPanel.add(titleLbl);
-        add(headerPanel, BorderLayout.NORTH);
-
-        // Center form
         JPanel centerPanel = new JPanel(new GridBagLayout());
-        centerPanel.setBackground(BG_COLOR);
 
         JPanel formPanel = new JPanel();
         formPanel.setLayout(new BoxLayout(formPanel, BoxLayout.Y_AXIS));
-        formPanel.setBackground(Color.WHITE);
-        formPanel.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(new Color(189, 195, 199), 1),
-                BorderFactory.createEmptyBorder(30, 40, 30, 40)
-        ));
 
         JLabel loginTitle = createTitleLabel("Login");
-        loginTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         formPanel.add(loginTitle);
-        formPanel.add(Box.createVerticalStrut(20));
+        formPanel.add(Box.createVerticalStrut(15));
 
         emailField = createStyledTextField();
         formPanel.add(createFormRow("Email:", emailField));
-        formPanel.add(Box.createVerticalStrut(10));
+        formPanel.add(Box.createVerticalStrut(5));
 
         passwordField = createStyledPasswordField();
         formPanel.add(createFormRow("Password:", passwordField));
-        formPanel.add(Box.createVerticalStrut(20));
+        formPanel.add(Box.createVerticalStrut(15));
 
-        // Buttons
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
-        btnPanel.setOpaque(false);
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 0));
 
-        loginBtn = createStyledButton("Login", PRIMARY_COLOR);
+        loginBtn = createStyledButton("Login", null);
         loginBtn.addActionListener(e -> handleLogin());
         btnPanel.add(loginBtn);
 
-        signupBtn = createStyledButton("Sign Up", SECONDARY_COLOR);
+        signupBtn = createStyledButton("Sign Up", null);
         signupBtn.addActionListener(e -> openSignup());
         btnPanel.add(signupBtn);
 
@@ -72,16 +51,6 @@ public class LoginFrame extends BaseFrame {
         centerPanel.add(formPanel);
         add(centerPanel, BorderLayout.CENTER);
 
-        // Footer
-        JPanel footerPanel = new JPanel();
-        footerPanel.setBackground(SECONDARY_COLOR);
-        footerPanel.setPreferredSize(new Dimension(getWidth(), 40));
-        JLabel footerLbl = new JLabel("© 2025 SkillForge - CC272 Programming II");
-        footerLbl.setForeground(Color.WHITE);
-        footerPanel.add(footerLbl);
-        add(footerPanel, BorderLayout.SOUTH);
-
-        // Enter key triggers login
         getRootPane().setDefaultButton(loginBtn);
     }
 

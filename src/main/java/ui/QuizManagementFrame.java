@@ -1,6 +1,5 @@
 package ui;
 
-
 import database.JsonDatabaseManager;
 import model.*;
 import utils.IdGenerator;
@@ -37,39 +36,30 @@ public class QuizManagementFrame extends BaseFrame {
     protected void initComponents() {
         setLayout(new BorderLayout());
 
-        // Header
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(WARNING_COLOR);
-        header.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
         JLabel titleLbl = new JLabel("Quiz: " + lesson.getTitle());
-        titleLbl.setFont(SUBTITLE_FONT);
-        titleLbl.setForeground(Color.WHITE);
+        titleLbl.setFont(new Font("Dialog", Font.BOLD, 12));
+        titleLbl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         header.add(titleLbl, BorderLayout.WEST);
 
         JPanel scorePanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        scorePanel.setOpaque(false);
         JLabel scoreLbl = new JLabel("Passing Score (%): ");
-        scoreLbl.setForeground(Color.WHITE);
-        scoreLbl.setFont(REGULAR_FONT);
         scorePanel.add(scoreLbl);
 
         int currentScore = lesson.getQuiz() != null ? lesson.getQuiz().getPassingScore() : 50;
         passingScoreSpinner = new JSpinner(new SpinnerNumberModel(currentScore, 0, 100, 5));
-        passingScoreSpinner.setPreferredSize(new Dimension(60, 30));
         passingScoreSpinner.addChangeListener(e -> updatePassingScore());
         scorePanel.add(passingScoreSpinner);
 
-        JButton backBtn = createStyledButton("Back", SECONDARY_COLOR);
+        JButton backBtn = createStyledButton("Close", null);
         backBtn.addActionListener(e -> dispose());
         scorePanel.add(backBtn);
         header.add(scorePanel, BorderLayout.EAST);
 
         add(header, BorderLayout.NORTH);
 
-        // Table
         JPanel tablePanel = new JPanel(new BorderLayout());
-        tablePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
-        tablePanel.setBackground(BG_COLOR);
+        tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 
         questionsModel = new DefaultTableModel(
                 new String[]{"Question ID", "Question", "Options", "Correct"}, 0) {
@@ -77,26 +67,21 @@ public class QuizManagementFrame extends BaseFrame {
         };
         questionsTable = new JTable(questionsModel);
         questionsTable.setFont(REGULAR_FONT);
-        questionsTable.setRowHeight(35);
-        questionsTable.getTableHeader().setFont(REGULAR_FONT);
-        questionsTable.getColumnModel().getColumn(1).setPreferredWidth(250);
 
         tablePanel.add(new JScrollPane(questionsTable), BorderLayout.CENTER);
         add(tablePanel, BorderLayout.CENTER);
 
-        // Buttons
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        btnPanel.setBackground(BG_COLOR);
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-        JButton addBtn = createStyledButton("Add Question", SUCCESS_COLOR);
+        JButton addBtn = createStyledButton("Add Question", null);
         addBtn.addActionListener(e -> addQuestion());
         btnPanel.add(addBtn);
 
-        JButton editBtn = createStyledButton("Edit Question", PRIMARY_COLOR);
+        JButton editBtn = createStyledButton("Edit", null);
         editBtn.addActionListener(e -> editQuestion());
         btnPanel.add(editBtn);
 
-        JButton deleteBtn = createStyledButton("Delete", DANGER_COLOR);
+        JButton deleteBtn = createStyledButton("Delete", null);
         deleteBtn.addActionListener(e -> deleteQuestion());
         btnPanel.add(deleteBtn);
 

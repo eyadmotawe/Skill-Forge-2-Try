@@ -1,6 +1,5 @@
 package ui;
 
-
 import auth.AuthService;
 import database.JsonDatabaseManager;
 import model.*;
@@ -42,18 +41,14 @@ public class StudentDashboardFrame extends BaseFrame {
 
     private JPanel createHeaderPanel() {
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(PRIMARY_COLOR);
-        header.setPreferredSize(new Dimension(getWidth(), 60));
-        header.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
         User user = auth.getCurrentUser();
-        JLabel titleLbl = new JLabel("Welcome, " + user.getUsername());
-        titleLbl.setFont(SUBTITLE_FONT);
-        titleLbl.setForeground(Color.WHITE);
+        JLabel titleLbl = new JLabel("Student Dashboard - " + user.getUsername());
+        titleLbl.setFont(new Font("Dialog", Font.BOLD, 12));
+        titleLbl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         header.add(titleLbl, BorderLayout.WEST);
 
-        JButton logoutBtn = createStyledButton("Logout", DANGER_COLOR);
-        logoutBtn.setPreferredSize(new Dimension(100, 35));
+        JButton logoutBtn = createStyledButton("Logout", null);
         logoutBtn.addActionListener(e -> logout());
         header.add(logoutBtn, BorderLayout.EAST);
 
@@ -61,9 +56,8 @@ public class StudentDashboardFrame extends BaseFrame {
     }
 
     private JPanel createAvailableCoursesPanel() {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setBackground(BG_COLOR);
+        JPanel panel = new JPanel(new BorderLayout(5, 5));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         availableModel = new DefaultTableModel(
                 new String[]{"Course ID", "Title", "Description", "Instructor", "Lessons"}, 0) {
@@ -71,17 +65,14 @@ public class StudentDashboardFrame extends BaseFrame {
         };
         availableCoursesTable = new JTable(availableModel);
         availableCoursesTable.setFont(REGULAR_FONT);
-        availableCoursesTable.setRowHeight(30);
-        availableCoursesTable.getTableHeader().setFont(REGULAR_FONT);
 
         JScrollPane scrollPane = new JScrollPane(availableCoursesTable);
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        btnPanel.setOpaque(false);
-        JButton enrollBtn = createStyledButton("Enroll", SUCCESS_COLOR);
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        JButton enrollBtn = createStyledButton("Enroll", null);
         enrollBtn.addActionListener(e -> enrollInCourse());
-        JButton refreshBtn = createStyledButton("Refresh", PRIMARY_COLOR);
+        JButton refreshBtn = createStyledButton("Refresh", null);
         refreshBtn.addActionListener(e -> loadData());
         btnPanel.add(enrollBtn);
         btnPanel.add(refreshBtn);
@@ -91,9 +82,8 @@ public class StudentDashboardFrame extends BaseFrame {
     }
 
     private JPanel createEnrolledCoursesPanel() {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setBackground(BG_COLOR);
+        JPanel panel = new JPanel(new BorderLayout(5, 5));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         enrolledModel = new DefaultTableModel(
                 new String[]{"Course ID", "Title", "Progress", "Status"}, 0) {
@@ -101,15 +91,12 @@ public class StudentDashboardFrame extends BaseFrame {
         };
         enrolledCoursesTable = new JTable(enrolledModel);
         enrolledCoursesTable.setFont(REGULAR_FONT);
-        enrolledCoursesTable.setRowHeight(30);
-        enrolledCoursesTable.getTableHeader().setFont(REGULAR_FONT);
 
         JScrollPane scrollPane = new JScrollPane(enrolledCoursesTable);
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        btnPanel.setOpaque(false);
-        JButton viewBtn = createStyledButton("View Lessons", PRIMARY_COLOR);
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        JButton viewBtn = createStyledButton("View Lessons", null);
         viewBtn.addActionListener(e -> viewLessons());
         btnPanel.add(viewBtn);
         panel.add(btnPanel, BorderLayout.SOUTH);
@@ -118,9 +105,8 @@ public class StudentDashboardFrame extends BaseFrame {
     }
 
     private JPanel createCertificatesPanel() {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
-        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        panel.setBackground(BG_COLOR);
+        JPanel panel = new JPanel(new BorderLayout(5, 5));
+        panel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
         certificatesModel = new DefaultTableModel(
                 new String[]{"Certificate ID", "Course", "Issue Date"}, 0) {
@@ -128,15 +114,12 @@ public class StudentDashboardFrame extends BaseFrame {
         };
         certificatesTable = new JTable(certificatesModel);
         certificatesTable.setFont(REGULAR_FONT);
-        certificatesTable.setRowHeight(30);
-        certificatesTable.getTableHeader().setFont(REGULAR_FONT);
 
         JScrollPane scrollPane = new JScrollPane(certificatesTable);
         panel.add(scrollPane, BorderLayout.CENTER);
 
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        btnPanel.setOpaque(false);
-        JButton viewCertBtn = createStyledButton("View Certificate", PRIMARY_COLOR);
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
+        JButton viewCertBtn = createStyledButton("View Certificate", null);
         viewCertBtn.addActionListener(e -> viewCertificate());
         btnPanel.add(viewCertBtn);
         panel.add(btnPanel, BorderLayout.SOUTH);

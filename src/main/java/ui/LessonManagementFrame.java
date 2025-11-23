@@ -1,6 +1,5 @@
 package ui;
 
-
 import database.JsonDatabaseManager;
 import model.*;
 import utils.IdGenerator;
@@ -34,24 +33,19 @@ public class LessonManagementFrame extends BaseFrame {
     protected void initComponents() {
         setLayout(new BorderLayout());
 
-        // Header
         JPanel header = new JPanel(new BorderLayout());
-        header.setBackground(WARNING_COLOR);
-        header.setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
         JLabel titleLbl = new JLabel("Lessons: " + course.getTitle());
-        titleLbl.setFont(SUBTITLE_FONT);
-        titleLbl.setForeground(Color.WHITE);
+        titleLbl.setFont(new Font("Dialog", Font.BOLD, 12));
+        titleLbl.setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
         header.add(titleLbl, BorderLayout.WEST);
 
-        JButton backBtn = createStyledButton("Back", SECONDARY_COLOR);
+        JButton backBtn = createStyledButton("Close", null);
         backBtn.addActionListener(e -> dispose());
         header.add(backBtn, BorderLayout.EAST);
         add(header, BorderLayout.NORTH);
 
-        // Table
         JPanel tablePanel = new JPanel(new BorderLayout());
-        tablePanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 10, 20));
-        tablePanel.setBackground(BG_COLOR);
+        tablePanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 5, 10));
 
         lessonsModel = new DefaultTableModel(
                 new String[]{"Lesson ID", "Title", "Has Quiz", "Questions"}, 0) {
@@ -59,30 +53,25 @@ public class LessonManagementFrame extends BaseFrame {
         };
         lessonsTable = new JTable(lessonsModel);
         lessonsTable.setFont(REGULAR_FONT);
-        lessonsTable.setRowHeight(30);
-        lessonsTable.getTableHeader().setFont(REGULAR_FONT);
 
         tablePanel.add(new JScrollPane(lessonsTable), BorderLayout.CENTER);
         add(tablePanel, BorderLayout.CENTER);
 
-        // Buttons
-        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 10));
-        btnPanel.setBackground(BG_COLOR);
-        btnPanel.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+        JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-        JButton addBtn = createStyledButton("Add Lesson", SUCCESS_COLOR);
+        JButton addBtn = createStyledButton("Add Lesson", null);
         addBtn.addActionListener(e -> addLesson());
         btnPanel.add(addBtn);
 
-        JButton editBtn = createStyledButton("Edit Lesson", PRIMARY_COLOR);
+        JButton editBtn = createStyledButton("Edit", null);
         editBtn.addActionListener(e -> editLesson());
         btnPanel.add(editBtn);
 
-        JButton quizBtn = createStyledButton("Manage Quiz", WARNING_COLOR);
+        JButton quizBtn = createStyledButton("Quiz", null);
         quizBtn.addActionListener(e -> manageQuiz());
         btnPanel.add(quizBtn);
 
-        JButton deleteBtn = createStyledButton("Delete", DANGER_COLOR);
+        JButton deleteBtn = createStyledButton("Delete", null);
         deleteBtn.addActionListener(e -> deleteLesson());
         btnPanel.add(deleteBtn);
 
