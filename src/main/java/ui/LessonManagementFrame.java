@@ -92,9 +92,12 @@ public class LessonManagementFrame extends BaseFrame {
 
     private void addLesson() {
         JTextField titleField = new JTextField();
+        titleField.setPreferredSize(new Dimension(400, 28));
+
         JTextArea contentArea = new JTextArea(6, 35);
         contentArea.setLineWrap(true);
         JTextField resourcesField = new JTextField();
+        resourcesField.setPreferredSize(new Dimension(400, 28));
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -105,7 +108,7 @@ public class LessonManagementFrame extends BaseFrame {
         contentPanel.add(new JScrollPane(contentArea), BorderLayout.CENTER);
         panel.add(contentPanel);
         panel.add(Box.createVerticalStrut(5));
-        panel.add(createFormRow("Resources (comma-sep):", resourcesField));
+        panel.add(createFormRow("Resources:", resourcesField));
 
         int result = JOptionPane.showConfirmDialog(this, panel, "Add Lesson",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
@@ -146,9 +149,12 @@ public class LessonManagementFrame extends BaseFrame {
         Lesson lesson = course.getLessonById(lessonId);
 
         JTextField titleField = new JTextField(lesson.getTitle());
+        titleField.setPreferredSize(new Dimension(400, 28));
+
         JTextArea contentArea = new JTextArea(lesson.getContent(), 6, 35);
         contentArea.setLineWrap(true);
         JTextField resourcesField = new JTextField(String.join(", ", lesson.getResources()));
+        resourcesField.setPreferredSize(new Dimension(400, 28));
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -159,7 +165,7 @@ public class LessonManagementFrame extends BaseFrame {
         contentPanel.add(new JScrollPane(contentArea), BorderLayout.CENTER);
         panel.add(contentPanel);
         panel.add(Box.createVerticalStrut(5));
-        panel.add(createFormRow("Resources (comma-sep):", resourcesField));
+        panel.add(createFormRow("Resources:", resourcesField));
 
         int result = JOptionPane.showConfirmDialog(this, panel, "Edit Lesson",
                 JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
